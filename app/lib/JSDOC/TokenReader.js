@@ -27,6 +27,7 @@ JSDOC.TokenReader.prototype.tokenize = function(/**JSDOC.TextStream*/stream) {
 		if (this.read_dbquote(stream, tokens))   continue;
 		if (this.read_snquote(stream, tokens))   continue;
 		if (this.read_regx(stream, tokens))      continue;
+		if (this.read_xml(stream, tokens))       continue;
 		if (this.read_numb(stream, tokens))      continue;
 		if (this.read_punc(stream, tokens))      continue;
 		if (this.read_space(stream, tokens))     continue;
@@ -327,6 +328,44 @@ JSDOC.TokenReader.prototype.read_regx = function(/**JSDOC.TokenStream*/stream, t
 			}
 		}
 		// error: unterminated regex
+	}
+	return false;
+}
+
+/**
+	@returns {Boolean} Was the token found?
+ */
+JSDOC.TokenReader.prototype.read_xml = function(/**JSDOC.TokenStream*/stream, tokens) {
+	if (
+		stream.look() == "<"
+		&& 
+		(
+			!tokens.last()
+			||
+			(
+				!tokens.last().is("NUMB")
+				&& !tokens.last().is("STRN")
+				&& !tokens.last().is("REGX")
+				&& !tokens.last().is("NAME")
+				&& !tokens.last().is("RIGHT_PAREN")
+				&& !tokens.last().is("RIGHT_BRACKET")
+			)
+		)
+	) {
+		// find terminator
+		var xml = stream.next();
+		
+		while (!stream.look().eof) {
+			if (stream.look() == ">") {
+				xml += stream.next();
+				tokens.push(new JSDOC.Token(xml, "XML", "XML"));
+				return true;
+			}
+			else {
+				xml += stream.next();
+			}
+		}
+		// error! unterminated xml tag
 	}
 	return false;
 }

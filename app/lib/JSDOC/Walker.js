@@ -61,7 +61,7 @@ JSDOC.Walker.prototype.step = function() {
 			
 			var matching = this.ts.getMatchingToken("LEFT_CURLY");
 			if (matching) matching.popNamescope = name;
-			else LOG.warn("Mismatched } character. Can't parse code.");
+			else LOG.warn("Mismatched } character. Can't parse code in file " + symbol.srcFile + ".");
 			
 			this.lastDoc = null;
 			return true;
@@ -122,7 +122,7 @@ JSDOC.Walker.prototype.step = function() {
 				
 				var matching = this.ts.getMatchingToken(null, "RIGHT_CURLY");
 				if (matching) matching.popNamescope = name;
-				else LOG.warn("Mismatched } character. Can't parse code.");
+				else LOG.warn("Mismatched } character. Can't parse code in file " + symbol.srcFile + ".");
 			}
 			// function foo() {}
 			else if (this.ts.look(-1).is("FUNCTION") && this.ts.look(1).is("LEFT_PAREN")) {
@@ -144,7 +144,7 @@ JSDOC.Walker.prototype.step = function() {
 				
 				var matching = this.ts.getMatchingToken("LEFT_CURLY");
 				if (matching) matching.popNamescope = name;
-				else LOG.warn("Mismatched } character. Can't parse code.");
+				else LOG.warn("Mismatched } character. Can't parse code in file " + symbol.srcFile + ".");
 			}
 			// foo = function() {}
 			else if (this.ts.look(1).is("ASSIGN") && this.ts.look(2).is("FUNCTION")) {
@@ -169,7 +169,7 @@ JSDOC.Walker.prototype.step = function() {
 				
 				var matching = this.ts.getMatchingToken("LEFT_CURLY");
 				if (matching) matching.popNamescope = name;
-				else LOG.warn("Mismatched } character. Can't parse code.");
+				else LOG.warn("Mismatched } character. Can't parse code in file " + symbol.srcFile + ".");
 			}
 			// foo = new function() {}
 			else if (this.ts.look(1).is("ASSIGN") && this.ts.look(2).is("NEW") && this.ts.look(3).is("FUNCTION")) {
@@ -196,7 +196,7 @@ JSDOC.Walker.prototype.step = function() {
 				
 				var matching = this.ts.getMatchingToken("LEFT_CURLY");
 				if (matching) matching.popNamescope = name;
-				else LOG.warn("Mismatched } character. Can't parse code.");
+				else LOG.warn("Mismatched } character. Can't parse code in file " + symbol.srcFile + ".");
 			}
 			// foo: function() {}
 			else if (this.ts.look(1).is("COLON") && this.ts.look(2).is("FUNCTION")) {
@@ -224,7 +224,7 @@ JSDOC.Walker.prototype.step = function() {
 				
 				var matching = this.ts.getMatchingToken("LEFT_CURLY");
 				if (matching) matching.popNamescope = name;
-				else LOG.warn("Mismatched } character. Can't parse code.");
+				else LOG.warn("Mismatched } character. Can't parse code in file " + symbol.srcFile + ".");
 			}
 			// foo = {}
 			else if (this.ts.look(1).is("ASSIGN") && this.ts.look(2).is("LEFT_CURLY")) {
@@ -249,7 +249,7 @@ JSDOC.Walker.prototype.step = function() {
 				
 				var matching = this.ts.getMatchingToken("LEFT_CURLY");
 				if (matching) matching.popNamescope = name;
-				else LOG.warn("Mismatched } character. Can't parse code.");
+				else LOG.warn("Mismatched } character. Can't parse code in file " + symbol.srcFile + ".");
 			}
 			// var foo;
 			else if (this.ts.look(1).is("SEMICOLON")) {
@@ -306,10 +306,12 @@ JSDOC.Walker.prototype.step = function() {
 				
 				var matching = this.ts.getMatchingToken("LEFT_CURLY");
 				if (matching) matching.popNamescope = name;
-				else LOG.warn("Mismatched } character. Can't parse code.");
+				else LOG.warn("Mismatched } character. Can't parse code in file " + symbol.srcFile + ".");
 			}
 			// foo: x
-			else if (this.ts.look(1).is("COLON")) {
+			// get x()
+			// set x()
+			else if (this.ts.look(1).is("COLON") || this.ts.look(-1).is("GET") || this.ts.look(-1).is("SET")) {
 				name = (this.namescope.last().alias+"."+name).replace("#.", "#");;
 				
 				if (this.lastDoc) doc = this.lastDoc;
@@ -354,7 +356,7 @@ JSDOC.Walker.prototype.step = function() {
 				
 				var matching = this.ts.getMatchingToken("LEFT_CURLY");
 				if (matching) matching.popNamescope = name;
-				else LOG.warn("Mismatched } character. Can't parse code.");
+				else LOG.warn("Mismatched } character. Can't parse code in file " + symbol.srcFile + ".");
 			}
 		}
 	}
