@@ -33,6 +33,7 @@ JSDOC.Symbol.prototype.init = function() {
 	this.isNamespace = false;
 	this.isPrivate = false;
 	this.isStatic = false;
+        this.isPage = false;
 	this.memberOf = "";
 	this.methods = [];
 	this._name = "";
@@ -520,6 +521,15 @@ JSDOC.Symbol.prototype.setTags = function() {
 	/*t:
 		// todo
 	*/
+
+	// @page
+	var pages = this.comment.getTag("page");
+	if (pages.length) {
+		this.isPage = true;
+		this.alias = pages[0].desc; // desc can't apply to the constructor as there is none.
+                this.page = this.desc;
+	}
+	
 }
 
 JSDOC.Symbol.prototype.is = function(what) {

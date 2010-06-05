@@ -8,6 +8,7 @@ function Link() {
 	this.text = "";
 	this.innerName = "";
 	this.classLink = false;
+	this.pageLink = false;
 	this.targetName = "";
 	
 	this.target = function(targetName) {
@@ -30,6 +31,11 @@ function Link() {
 		if (defined(alias)) this.alias = new String(alias);
 		return this;
 	}
+        this.toPage = function(alias) {
+                this.pageLink = true;
+                this.alias = new String(alias);
+                return this;
+        }
 	this.toClass = function(alias) {
 		this.classLink = true;
 		return this.toSymbol(alias);
@@ -43,7 +49,10 @@ function Link() {
 		var linkString;
 		var thisLink = this;
 
-		if (this.alias) {
+                if (this.pageLink) {
+		    linkString = thisLink._makePageLink(this.alias);
+                }
+                else if (this.alias) {
 			linkString = this.alias.replace(/(^|[^a-z$0-9_#.:^-])([|a-z$0-9_#.:^-]+)($|[^a-z$0-9_#.:^-])/i,
 				function(match, prematch, symbolName, postmatch) {
 					var symbolNames = symbolName.split("|");
@@ -138,5 +147,15 @@ Link.prototype._makeFileLink = function(filePath) {
 	var outFilePath =  Link.base + filePath;
 
 	if (!this.text) this.text = filePath;
+	return "<a href=\""+outFilePath+"\""+target+">"+this.text+"</a>";
+}
+
+/** Create a link to a page. */
+Link.prototype._makePageLink = function(pageName) {
+	var target = (this.targetName)? " target=\""+this.targetName+"\"" : "";
+
+	var outFilePath =  Link.base + pageName + ".html";
+
+	if (!this.text) this.text = pageName;
 	return "<a href=\""+outFilePath+"\""+target+">"+this.text+"</a>";
 }
