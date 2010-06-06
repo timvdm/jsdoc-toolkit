@@ -125,7 +125,7 @@ Link.prototype._makeSymbolLink = function(alias) {
 		JSDOC.PluginManager.run("onSymbolLink", link);
 	}
 	
-	return "<a href=\""+link.linkPath+"\""+target+">"+link.linkText+"</a>";
+	return "<a target=\"classFrame\" href=\""+link.linkPath+"\""+target+">"+link.linkText+"</a>";
 }
 
 /** Create a link to a source file. */
@@ -137,7 +137,7 @@ Link.prototype._makeSrcLink = function(srcFilePath) {
 	var outFilePath = Link.base + publish.conf.srcDir + srcFile + publish.conf.ext;
 
 	if (!this.text) this.text = FilePath.fileName(srcFilePath);
-	return "<a href=\""+outFilePath+"\""+target+">"+this.text+"</a>";
+	return "<a target=\"classFrame\" href=\""+outFilePath+"\""+target+">"+this.text+"</a>";
 }
 
 /** Create a link to a source file. */
@@ -147,7 +147,7 @@ Link.prototype._makeFileLink = function(filePath) {
 	var outFilePath =  Link.base + filePath;
 
 	if (!this.text) this.text = filePath;
-	return "<a href=\""+outFilePath+"\""+target+">"+this.text+"</a>";
+	return "<a target=\"classFrame\" href=\""+outFilePath+"\""+target+">"+this.text+"</a>";
 }
 
 /** Create a link to a page. */
@@ -157,5 +157,5 @@ Link.prototype._makePageLink = function(pageName) {
 	var outFilePath =  Link.base + pageName + ".html";
 
 	if (!this.text) this.text = pageName;
-	return "<a href=\""+outFilePath+"\""+target+">"+this.text+"</a>";
+	return "<a target=\"classFrame\" href=\""+outFilePath+"\""+target+">"+this.text+"</a>";
 }

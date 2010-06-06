@@ -3,7 +3,7 @@
 body
 {
 	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
-	width: 1000px;
+	width: 700px;
 }
 
 .header
@@ -24,18 +24,18 @@ h1
 hr
 {
 	border: none 0;
-	border-top: 1px solid #8C0D17;
+	border-top: 1px solid {+data.color1+};
 	height: 1px;
 }
 
 a
 {
-        color: #D93D04;
+        color: {+data.color3+};
 }
 
 a:visited 
 {
-        color: #8C0D17;
+        color: {+data.color1+};
 }
 
 pre.code
@@ -58,8 +58,8 @@ pre.code
 
 #content
 {
-	margin-left: 310px;
-	width: 690px;
+	margin-left: 20px;
+	width: 700px;
 }
 
 .classList
@@ -89,12 +89,12 @@ h1.classTitle
 h2 { font-size: 110%; }
 caption, div.sectionTitle
 {
-	background-color: #8C0D17;
+	background-color: {+data.color1+};
 	color: #fff;
 	font-size:130%;
 	text-align: left;
 	padding: 2px 6px 2px 6px;
-	border: 1px #8C0D17 solid;
+	border: 1px {+data.color1+} solid;
 }
 
 div.sectionTitle { margin-bottom: 8px; }
@@ -104,14 +104,14 @@ div.sectionTitle { margin-bottom: 8px; }
 {
 	vertical-align: top;
 	padding: 4px;
-	border-bottom: 1px #8C0D17 solid;
-	border-right: 1px #8C0D17 solid;
+	border-bottom: 1px {+data.color1+} solid;
+	border-right: 1px {+data.color1+} solid;
 }
 
 /*col#summaryAttributes {}*/
 .summaryTable td.attributes
 {
-	border-left: 1px #8C0D17 solid;
+	border-left: 1px {+data.color1+} solid;
 	width: 140px;
 	text-align: right;
 }
@@ -119,7 +119,7 @@ div.sectionTitle { margin-bottom: 8px; }
 td.attributes, .fixedFont
 {
 	line-height: 15px;
-	color: #D93D04;
+	color: {+data.color3+};
 	font-family: "Courier New",Courier,monospace;
 	font-size: 13px;
 }
@@ -162,7 +162,7 @@ ul.inheritsList
 
 .light, td.attributes, .light a:link, .light a:visited
 {
-	color: #223F20;
+	color: {+data.color2+};
 	font-style: italic;
 }
 
