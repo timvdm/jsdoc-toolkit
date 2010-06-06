@@ -33,7 +33,7 @@
 <h2>Classes</h2>
     <for each="namespaceKey" in="keys(data.namespaces).sort()">
 
-        <p><a href="#" onclick="$('#{+namespaceKey+}').slideToggle({+keys(data.namespaces).length+}*50);">
+        <p><a target="classFrame" href="#" onclick="$('#{+namespaceKey+}').slideToggle({+keys(data.namespaces).length+}*50);">
               {+namespaceKey.replace(/_/gi, '.')+}</a></p>
         <div id="{+namespaceKey+}" class="namespace">
         <ul class="classList">
